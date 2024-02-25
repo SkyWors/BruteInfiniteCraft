@@ -62,6 +62,11 @@ def craft(itemId1, item1, itemId2, item2):
 			print(f"[{isAlreadyInDB(isExist)}] [{isNewItem(data['isNew'])}] {item1} + {item2} = {colorResult(isExist, data['isNew'], data['result'])} {data['emoji']}{Style.RESET_ALL}")
 
 			if (isExist):
+				cursor.execute(f"SELECT id FROM item WHERE name = '{data['result']}'")
+				idResult = cursor.fetchone()
+
+				cursor.execute(f"INSERT INTO craft (idItem1, idItem2, idResult) VALUES ({itemId1}, {itemId2}, {idResult[0]})")
+				database.commit()
 				return
 			else:
 				cursor.execute(f"INSERT INTO item (name, symbole, isNew) VALUES ('{data['result']}', '{data['emoji']}', {data['isNew']})")
@@ -95,6 +100,16 @@ def worker():
 		for value in request2:
 			tempId.append(value[0])
 			tempName.append(value[1])
+
+		cursor.execute(f"SELECT * FROM craft WHERE idItem1 = {tempId[0]} AND idItem2 = {tempId[1]}")
+		isCraftExist1 = cursor.fetchone()
+		cursor.execute(f"SELECT * FROM craft WHERE idItem1 = {tempId[1]} AND idItem2 = {tempId[0]}")
+		isCraftExist2 = cursor.fetchone()
+
+		if isCraftExist1:
+			return
+		if isCraftExist2:
+			return
 
 		craft(tempId[0], tempName[0], tempId[1], tempName[1])
 
