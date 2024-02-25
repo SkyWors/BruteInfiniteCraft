@@ -1,18 +1,28 @@
 import mysql.connector
 import requests
 import threading
+from colorama import Fore, Style
 
 def isAlreadyInDB(value):
 	if value:
 		return "_"
 	else:
-		return "+"
+		return f"{Fore.GREEN}+{Style.RESET_ALL}"
 
 def isNewItem(value):
 	if value:
-		return "*"
+		return f"{Fore.LIGHTYELLOW_EX}*{Style.RESET_ALL}"
 	else:
 		return "_"
+
+def colorResult(isExist, isNew, item):
+	if isNew:
+		return f"{Fore.LIGHTYELLOW_EX}{item}"
+	else:
+		if isExist:
+			return f"{Style.RESET_ALL}{item}"
+		else:
+			return f"{Fore.GREEN}{item}"
 
 def craft(itemId1, item1, itemId2, item2):
 	try:
@@ -43,13 +53,13 @@ def craft(itemId1, item1, itemId2, item2):
 
 			# Nothing is not an item
 			if data['result'] == "Nothing":
-				print(f"[X] [X] {item1} + {item2} = NOTHING FIND.")
+				print(f"[{Fore.RED}X{Style.RESET_ALL}] [{Fore.RED}X{Style.RESET_ALL}] {item1} + {item2} = {Fore.RED}Nothing find.{Style.RESET_ALL}")
 				return
 
 			cursor.execute(f"SELECT name FROM item WHERE name = '{data['result']}'")
 			isExist = cursor.fetchone()
 
-			print(f"[{isAlreadyInDB(isExist)}] [{isNewItem(data['isNew'])}] {item1} + {item2} = {data['result']} {data['emoji']}")
+			print(f"[{isAlreadyInDB(isExist)}] [{isNewItem(data['isNew'])}] {item1} + {item2} = {colorResult(isExist, data['isNew'], data['result'])} {data['emoji']}{Style.RESET_ALL}")
 
 			if (isExist):
 				return
@@ -63,9 +73,9 @@ def craft(itemId1, item1, itemId2, item2):
 				cursor.execute(f"INSERT INTO craft (idItem1, idItem2, idResult) VALUES ({itemId1}, {itemId2}, {idResult[0]})")
 				database.commit()
 		else:
-			print(f"Crafting failed: {response.status_code} {response.reason}")
+			print(f"Crafting failed: {Fore.RED}{response.status_code} {response.reason}{Style.RESET_ALL}")
 	except Exception as e:
-		print(f"Craft error: {e}")
+		print(f"Craft error: {Fore.RED}{e}{Style.RESET_ALL}")
 
 def worker():
 	database = mysql.connector.connect(host="localhost", user="root", password="", database="bruteinfinitecraft", charset="utf8mb4")
@@ -92,4 +102,4 @@ for i in range(workerNumber):
 		t = threading.Thread(target=worker)
 		t.start()
 	except Exception as e:
-		print(f"Thread error: {e}")
+		print(f"Thread error: {Fore.RED}{e}{Style.RESET_ALL}")
