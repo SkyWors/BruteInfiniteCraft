@@ -2,6 +2,19 @@ CREATE DATABASE bruteinfinitecraft;
 USE bruteinfinitecraft;
 
 --
+-- Table structure for table `item`
+--
+
+DROP TABLE IF EXISTS `item`;
+CREATE TABLE `item` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `name` text NOT NULL,
+  `symbole` varchar(255) NOT NULL,
+  `isNew` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`)
+);
+
+--
 -- Table structure for table `craft`
 --
 
@@ -18,20 +31,7 @@ CREATE TABLE `craft` (
   CONSTRAINT `craft_item_FK` FOREIGN KEY (`idItem1`) REFERENCES `item` (`id`),
   CONSTRAINT `craft_item_FK_1` FOREIGN KEY (`idItem2`) REFERENCES `item` (`id`),
   CONSTRAINT `craft_item_FK_2` FOREIGN KEY (`idResult`) REFERENCES `item` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9775 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Table structure for table `item`
---
-
-DROP TABLE IF EXISTS `item`;
-CREATE TABLE `item` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `name` text CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `symbole` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
-  `isNew` tinyint(1) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9886 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+);
 
 --
 -- Starting datas

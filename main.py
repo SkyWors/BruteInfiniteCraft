@@ -16,7 +16,7 @@ def isNewItem(value):
 
 def craft_items(itemId1, item1, itemId2, item2):
 	try:
-		database = mysql.connector.connect(host="localhost", user="root", password="", database="BruteInfiniteCraft", charset="utf8mb4")
+		database = mysql.connector.connect(host="localhost", user="root", password="", database="bruteinfinitecraft", charset="utf8mb4")
 		cursor = database.cursor()
 
 		response = requests.get(
@@ -56,7 +56,7 @@ def craft_items(itemId1, item1, itemId2, item2):
 				cursor.execute(f"INSERT INTO item (name, symbole, isNew) VALUES ('{data['result']}', '{data['emoji']}', {data['isNew']})")
 				database.commit()
 
-				cursor.execute(f"SELECT id FROM item WHERE name = '{data["result"]}'")
+				cursor.execute(f"SELECT id FROM item WHERE name = '{data['result']}'")
 				idResult = cursor.fetchone()
 
 				cursor.execute(f"INSERT INTO craft (idItem1, idItem2, idResult) VALUES ({itemId1}, {itemId2}, {idResult[0]})")
@@ -67,7 +67,7 @@ def craft_items(itemId1, item1, itemId2, item2):
 		print(f"Craft error: {e}")
 
 def worker():
-	database = mysql.connector.connect(host="localhost", user="root", password="", database="BruteInfiniteCraft", charset="utf8mb4")
+	database = mysql.connector.connect(host="localhost", user="root", password="", database="bruteinfinitecraft", charset="utf8mb4")
 	cursor = database.cursor()
 
 	while True:
@@ -82,7 +82,7 @@ def worker():
 
 		craft_items(tempId[0], tempName[0], tempId[1], tempName[1])
 
-workerNumber = 5
+workerNumber = 1
 
 print("\n  = BruteInfiniteCraft =\n")
 print(f"Starting {workerNumber} workers...")
