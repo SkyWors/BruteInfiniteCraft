@@ -82,7 +82,7 @@ def worker():
 
 		craft_items(tempId[0], tempName[0], tempId[1], tempName[1])
 
-workerNumber = 20
+workerNumber = 5
 
 print("\n  = BruteInfiniteCraft =\n")
 print(f"Starting {workerNumber} workers...")
