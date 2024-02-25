@@ -32,18 +32,7 @@ def craft(itemId1, item1, itemId2, item2):
 		response = requests.get(
 			f"https://neal.fun/api/infinite-craft/pair?first={item1}&second={item2}",
 			headers={
-				"accept": "*/*",
-				"accept-language": "fr-FR,fr;q=0.9",
-				"cache-control": "no-cache",
-				"pragma": "no-cache",
 				"Referer": "https://neal.fun/infinite-craft/",
-				"Referrer-Policy": "strict-origin-when-cross-origin",
-				"sec-ch-ua": '"Not A(Brand";v="99", "Google Chrome";v="121", "Chromium";v="121"',
-				"sec-ch-ua-mobile": "?0",
-				"sec-ch-ua-platform": '"Windows"',
-				"sec-fetch-dest": "empty",
-				"sec-fetch-mode": "cors",
-				"sec-fetch-site": "same-origin",
 				"User-Agent": "Mozilla/5.0 (Linux i546 x86_64; en-US) AppleWebKit/537.10 (KHTML, like Gecko) Chrome/47.0.1707.389 Safari/603"
 			}
 		)
