@@ -54,6 +54,9 @@ def craft(itemId1, item1, itemId2, item2):
 			# Nothing is not an item
 			if data['result'] == "Nothing":
 				print(f"[{Fore.RED}X{Style.RESET_ALL}] [{Fore.RED}X{Style.RESET_ALL}] {item1} + {item2} = {Fore.RED}Nothing find.{Style.RESET_ALL}")
+
+				cursor.execute(f"INSERT INTO craft (idItem1, idItem2) VALUES ({itemId1}, {itemId2})")
+				database.commit()
 				return
 
 			cursor.execute(f"SELECT name FROM item WHERE name = '{data['result']}'")
