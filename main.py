@@ -14,7 +14,7 @@ def isNewItem(value):
 	else:
 		return "_"
 
-def craft_items(itemId1, item1, itemId2, item2):
+def craft(itemId1, item1, itemId2, item2):
 	try:
 		database = mysql.connector.connect(host="localhost", user="root", password="", database="bruteinfinitecraft", charset="utf8mb4")
 		cursor = database.cursor()
@@ -42,7 +42,8 @@ def craft_items(itemId1, item1, itemId2, item2):
 			data = response.json()
 
 			# Nothing is not an item
-			if data['result'] == "nothing":
+			if data['result'] == "Nothing":
+				print(f"[X] [X] {item1} + {item2} = NOTHING FIND.")
 				return
 
 			cursor.execute(f"SELECT name FROM item WHERE name = '{data['result']}'")
@@ -80,7 +81,7 @@ def worker():
 			tempId.append(value[0])
 			tempName.append(value[1])
 
-		craft_items(tempId[0], tempName[0], tempId[1], tempName[1])
+		craft(tempId[0], tempName[0], tempId[1], tempName[1])
 
 workerNumber = 1
 
