@@ -21,3 +21,4 @@ In terminal result:
 - [+] mean that the item was not in the database,
 - [*] mean that the item is a first discovery,
 - [_] mean nothing new.
+- [X] mean that nothing can be crafted from items

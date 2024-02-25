@@ -82,12 +82,17 @@ def worker():
 	cursor = database.cursor()
 
 	while True:
-		cursor.execute("SELECT id, name FROM item ORDER BY RAND() LIMIT 2")
-		request = cursor.fetchall()
+		cursor.execute("SELECT id, name FROM item ORDER BY RAND() LIMIT 1")
+		request1 = cursor.fetchall()
+		cursor.execute("SELECT id, name FROM item ORDER BY RAND() LIMIT 1")
+		request2 = cursor.fetchall()
 
 		tempId = []
 		tempName = []
-		for value in request:
+		for value in request1:
+			tempId.append(value[0])
+			tempName.append(value[1])
+		for value in request2:
 			tempId.append(value[0])
 			tempName.append(value[1])
 
