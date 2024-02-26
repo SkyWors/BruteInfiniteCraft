@@ -22,5 +22,5 @@ Change workerNumber variable to choose how many worker you want to dig the API.
 In terminal result:
 - [+] mean that the item was not in the database,
 - [*] mean that the item is a first discovery,
-- [_] mean nothing new.
-- [Ｘ] mean that nothing can be crafted from items
+- [ｘ] mean that nothing can be crafted from items
+- [ ] mean just a new recipe.
