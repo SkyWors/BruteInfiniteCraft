@@ -2,6 +2,8 @@
 
 BruteInfiniteCraft is a simple program that use [InfiniteCraft](https://neal.fun/infinite-craft)'s API to randomly generate and store items with recipe.
 
+![image](https://github.com/SkyWors/BruteInfiniteCraft/assets/70440695/3434b2dd-35b1-47cc-b73d-07b1fe826022)
+
 ## 🔧 Installation
 
 - BIC use MySQL database to store items and recipes,
