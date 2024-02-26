@@ -1,12 +1,16 @@
 import mysql.connector
 import requests
+import os
+from dotenv import load_dotenv
 from colorama import Fore, Style
 from function.indicator import indicator
 from function.colorResult import colorResult
 
+load_dotenv()
+
 def craft(itemId1, item1, itemId2, item2):
 	try:
-		database = mysql.connector.connect(host="localhost", user="root", password="", database="bruteinfinitecraft", charset="utf8mb4")
+		database = mysql.connector.connect(host=os.getenv("MYSQL_HOST"), user=os.getenv("MYSQL_USER"), password=os.getenv("MYSQL_PASSWORD"), database=os.getenv("MYSQL_DB"), charset="utf8mb4")
 		cursor = database.cursor()
 
 		try:

@@ -5,7 +5,7 @@ from function.plural import plural
 from function.worker import worker
 
 if __name__ == "__main__":
-	workerNumber = 1
+	workerNumber = 4
 
 	print(f"{Fore.LIGHTYELLOW_EX}{Figlet(font='small').renderText('BruteInfiniteCraft')}{Style.RESET_ALL}")
 

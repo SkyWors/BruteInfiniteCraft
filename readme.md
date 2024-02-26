@@ -7,7 +7,8 @@ BruteInfiniteCraft is a simple program that use [InfiniteCraft](https://neal.fun
 ## 🔧 Installation
 
 - BIC use MySQL database to store items and recipes,
-- Execute ``sql/database.sql`` script to create the database.
+- Execute ``sql/database.sql`` script to create the database,
+- Rename ``.env.example`` to ``.env`` and fill database credentials.
 
 ## 🤚 Usage
 
@@ -23,4 +24,4 @@ In terminal result:
 - [+] mean that the item was not in the database,
 - [*] mean that the item is a first discovery,
 - [ｘ] mean that nothing can be crafted from items
-- [ ] mean just a new recipe.
+- [_] mean just a new recipe.

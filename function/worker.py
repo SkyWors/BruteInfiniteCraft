@@ -1,8 +1,12 @@
 import mysql.connector
+import os
+from dotenv import load_dotenv
 from function.craft import craft
 
+load_dotenv()
+
 def worker():
-	database = mysql.connector.connect(host="localhost", user="root", password="", database="bruteinfinitecraft", charset="utf8mb4")
+	database = mysql.connector.connect(host=os.getenv("MYSQL_HOST"), user=os.getenv("MYSQL_USER"), password=os.getenv("MYSQL_PASSWORD"), database=os.getenv("MYSQL_DB"), charset="utf8mb4")
 	cursor = database.cursor()
 
 	while True:
