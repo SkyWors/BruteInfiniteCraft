@@ -2,7 +2,7 @@
 
 BruteInfiniteCraft is a simple program that use [InfiniteCraft](https://neal.fun/infinite-craft)'s API to randomly generate and store items with recipe.
 
-![image](https://github.com/SkyWors/BruteInfiniteCraft/assets/70440695/e4f2b217-885b-463c-bfbe-dfb2f2ed67d6)
+![image](https://github.com/SkyWors/BruteInfiniteCraft/assets/70440695/29f791a0-5d5e-49e0-a1d2-282230345927)
 
 ## 🔧 Installation
 
