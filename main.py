@@ -1,6 +1,7 @@
 import mysql.connector
 import requests
 import threading
+from pyfiglet import Figlet
 from colorama import Fore, Style
 
 def isAlreadyInDB(value):
@@ -107,8 +108,10 @@ def worker():
 
 workerNumber = 1
 
-print("\n  = BruteInfiniteCraft =\n")
-print(f"Starting {workerNumber} workers...")
+print(f"{Fore.LIGHTYELLOW_EX}", Figlet(font='small').renderText('BruteInfiniteCraft'), f"{Style.RESET_ALL}")
+
+print(f"{Fore.LIGHTBLACK_EX}Starting {workerNumber} workers...{Style.RESET_ALL}\n")
+
 for i in range(workerNumber):
 	try:
 		t = threading.Thread(target=worker)
