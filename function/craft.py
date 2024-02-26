@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from colorama import Fore, Style
 from function.indicator import indicator
 from function.colorResult import colorResult
+from function.clLine import clLine
 
 load_dotenv()
 
@@ -27,6 +28,7 @@ def craft(itemId1, item1, itemId2, item2):
 
 				# Nothing is not an item
 				if data['result'] == "Nothing":
+					clLine()
 					print(f"[{Fore.RED}x{Style.RESET_ALL}] {item1} + {item2} = {Fore.RED}Nothing found.{Style.RESET_ALL}")
 
 					cursor.execute(f"INSERT INTO craft (idItem1, idItem2) VALUES ({itemId1}, {itemId2})")
@@ -36,6 +38,7 @@ def craft(itemId1, item1, itemId2, item2):
 				cursor.execute(f"SELECT name FROM item WHERE name = '{data['result']}'")
 				isExist = cursor.fetchone()
 
+				clLine()
 				print(f"[{indicator(isExist, data['isNew'])}] {item1} + {item2} = {colorResult(isExist, data['isNew'], data['result'])} {data['emoji']}{Style.RESET_ALL}")
 
 				if (isExist):
