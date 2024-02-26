@@ -4,17 +4,15 @@ import threading
 from pyfiglet import Figlet
 from colorama import Fore, Style
 
-def isAlreadyInDB(value):
-	if value:
-		return "_"
-	else:
-		return f"{Fore.GREEN}+{Style.RESET_ALL}"
 
-def isNewItem(value):
-	if value:
+def indicator(isExist, isNew):
+	if isNew:
 		return f"{Fore.LIGHTYELLOW_EX}*{Style.RESET_ALL}"
 	else:
-		return "_"
+		if isExist:
+			return "_"
+		else:
+			return f"{Fore.GREEN}+{Style.RESET_ALL}"
 
 def colorResult(isExist, isNew, item):
 	if isNew:
@@ -43,7 +41,7 @@ def craft(itemId1, item1, itemId2, item2):
 
 			# Nothing is not an item
 			if data['result'] == "Nothing":
-				print(f"[{Fore.RED}X{Style.RESET_ALL}] [{Fore.RED}X{Style.RESET_ALL}] {item1} + {item2} = {Fore.RED}Nothing find.{Style.RESET_ALL}")
+				print(f"[{Fore.RED}X{Style.RESET_ALL}] {item1} + {item2} = {Fore.RED}Nothing find.{Style.RESET_ALL}")
 
 				cursor.execute(f"INSERT INTO craft (idItem1, idItem2) VALUES ({itemId1}, {itemId2})")
 				database.commit()
@@ -52,7 +50,7 @@ def craft(itemId1, item1, itemId2, item2):
 			cursor.execute(f"SELECT name FROM item WHERE name = '{data['result']}'")
 			isExist = cursor.fetchone()
 
-			print(f"[{isAlreadyInDB(isExist)}] [{isNewItem(data['isNew'])}] {item1} + {item2} = {colorResult(isExist, data['isNew'], data['result'])} {data['emoji']}{Style.RESET_ALL}")
+			print(f"[{indicator(isExist, data['isNew'])}] {item1} + {item2} = {colorResult(isExist, data['isNew'], data['result'])} {data['emoji']}{Style.RESET_ALL}")
 
 			if (isExist):
 				cursor.execute(f"SELECT id FROM item WHERE name = '{data['result']}'")
@@ -106,15 +104,16 @@ def worker():
 
 		craft(tempId[0], tempName[0], tempId[1], tempName[1])
 
-workerNumber = 1
+if __name__ == "__main__":
+	workerNumber = 1
 
-print(f"{Fore.LIGHTYELLOW_EX}", Figlet(font='small').renderText('BruteInfiniteCraft'), f"{Style.RESET_ALL}")
+	print(f"{Fore.LIGHTYELLOW_EX}{Figlet(font='small').renderText('BruteInfiniteCraft')}{Style.RESET_ALL}")
 
-print(f"{Fore.LIGHTBLACK_EX}Starting {workerNumber} workers...{Style.RESET_ALL}\n")
+	print(f"{Fore.LIGHTBLACK_EX}Starting {workerNumber} workers...{Style.RESET_ALL}\n")
 
-for i in range(workerNumber):
-	try:
-		t = threading.Thread(target=worker)
-		t.start()
-	except Exception as e:
-		print(f"Thread error: {Fore.RED}{e}{Style.RESET_ALL}")
+	for i in range(workerNumber):
+		try:
+			t = threading.Thread(target=worker)
+			t.start()
+		except Exception as e:
+			print(f"Thread error: {Fore.RED}{e}{Style.RESET_ALL}")
