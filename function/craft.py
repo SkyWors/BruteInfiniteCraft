@@ -58,8 +58,11 @@ def craft(itemId1, item1, itemId2, item2):
 					cursor.execute(f"INSERT INTO craft (idItem1, idItem2, idResult) VALUES ({itemId1}, {itemId2}, {idResult[0]})")
 					database.commit()
 			else:
+				clLine()
 				print(f"Crafting failed: {Fore.RED}{response.status_code} {response.reason}{Style.RESET_ALL}")
 		except Exception as e:
+			clLine()
 			print(f"API error: {Fore.RED}{e}{Style.RESET_ALL}")
 	except Exception as e:
+		clLine()
 		print(f"Craft error: {Fore.RED}{e}{Style.RESET_ALL}")

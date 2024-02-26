@@ -1,8 +1,10 @@
 import threading
+import sys
 from pyfiglet import Figlet
 from colorama import Fore, Style
 from function.plural import plural
 from function.worker import worker
+from function.clLine import clLine
 
 if __name__ == "__main__":
 	workerNumber = 1
@@ -16,4 +18,5 @@ if __name__ == "__main__":
 			t = threading.Thread(target=worker)
 			t.start()
 		except Exception as e:
+			clLine()
 			print(f"Thread error: {Fore.RED}{e}{Style.RESET_ALL}")
