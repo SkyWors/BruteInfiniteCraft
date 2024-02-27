@@ -1,7 +1,7 @@
 import mysql.connector
 import requests
 import os
-from multiprocessing.connection import Client
+import socket
 from dotenv import load_dotenv
 from colorama import Fore, Style
 from function.indicator import indicator
@@ -13,8 +13,8 @@ load_dotenv()
 def craft(itemId1, item1, itemId2, item2):
 	try:
 		try:
-			address = ('localhost', 6872)
-			conn = Client(address)
+			client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+			client_socket.connect(("127.0.0.1", 65432))
 		except Exception as e:
 			clLine()
 			print(f"Connexion error: {Fore.RED}{e}{Style.RESET_ALL}")
@@ -36,7 +36,7 @@ def craft(itemId1, item1, itemId2, item2):
 
 				# Nothing is not an item
 				if data['result'] == "Nothing":
-					conn.send(f"[{Fore.RED}x{Style.RESET_ALL}] {item1} + {item2} = {Fore.RED}Nothing found.{Style.RESET_ALL}")
+					client_socket.sendall(f"[{Fore.RED}x{Style.RESET_ALL}] {item1} + {item2} = {Fore.RED}Nothing found.{Style.RESET_ALL}".encode(encoding="utf-8"))
 
 					cursor.execute(f"INSERT INTO craft (idItem1, idItem2) VALUES ({itemId1}, {itemId2})")
 					database.commit()
@@ -45,7 +45,7 @@ def craft(itemId1, item1, itemId2, item2):
 				cursor.execute(f"SELECT name FROM item WHERE name = '{data['result']}'")
 				isExist = cursor.fetchone()
 
-				conn.send(f"[{indicator(isExist, data['isNew'])}] {item1} + {item2} = {colorResult(isExist, data['isNew'], data['result'])} {data['emoji']}{Style.RESET_ALL}")
+				client_socket.sendall(f"[{indicator(isExist, data['isNew'])}] {item1} + {item2} = {colorResult(isExist, data['isNew'], data['result'])} {data['emoji']}{Style.RESET_ALL}".encode(encoding="utf-8"))
 
 				if (isExist):
 					cursor.execute(f"SELECT id FROM item WHERE name = '{data['result']}'")
@@ -65,10 +65,10 @@ def craft(itemId1, item1, itemId2, item2):
 					database.commit()
 			else:
 				clLine()
-				conn.send(f"Crafting failed: {Fore.RED}{response.status_code} {response.reason}{Style.RESET_ALL}")
+				client_socket.sendall(f"Crafting failed: {Fore.RED}{response.status_code} {response.reason}{Style.RESET_ALL}".encode(encoding="utf-8"))
 		except Exception as e:
 			clLine()
-			conn.send(f"API error: {Fore.RED}{e}{Style.RESET_ALL}")
+			client_socket.sendall(f"API error: {Fore.RED}{e}{Style.RESET_ALL}".encode(encoding="utf-8"))
 	except Exception as e:
 		clLine()
-		conn.send(f"Craft error: {Fore.RED}{e}{Style.RESET_ALL}")
+		client_socket.sendall(f"Craft error: {Fore.RED}{e}{Style.RESET_ALL}".encode(encoding="utf-8"))

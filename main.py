@@ -1,9 +1,8 @@
 import threading
 import os
-from multiprocessing.connection import Listener
+import socket
 from pyfiglet import Figlet
 from colorama import Fore, Style
-from function.plural import plural
 from function.worker import worker
 from function.clLine import clLine
 from function.statistic import statistic
@@ -11,8 +10,8 @@ from function.statistic import statistic
 if __name__ == "__main__":
 
 	try:
-		address = ('localhost', 6872)
-		listener = Listener(address)
+		server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		server_socket.bind(("127.0.0.1", 65432))
 	except Exception as e:
 		print(f"Server error: {e}")
 
@@ -31,9 +30,9 @@ tempLine = []
 while True:
 	width, height = os.get_terminal_size()
 
-	conn = listener.accept()
-	listener.last_accepted
-	msg = conn.recv()
+	server_socket.listen()
+	conn, addr = server_socket.accept()
+	msg = conn.recv(1024)
 
 	os.system("cls || clear")
 
@@ -41,9 +40,7 @@ while True:
 	statistic()
 	print("\n\n")
 
-	tempLine.append(msg)
-	# clLine()
-	# print(msg)
+	tempLine.append(msg.decode(encoding="utf-8"))
 
 	print("\n".join(tempLine[-(height-10):]))
 
