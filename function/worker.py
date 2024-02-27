@@ -51,7 +51,7 @@ def worker():
 			firstDiscoveryCount = cursor.fetchone()
 			database.commit()
 
-			print(f"    {Fore.LIGHTBLACK_EX}Workers : {threading.active_count()-1}   🧱Item{plural(itemCount[0])}: {Fore.BLUE}{itemCount[0]}   {Fore.LIGHTBLACK_EX}📄Recipe{plural(recipeCount[0])}: {Fore.BLUE}{recipeCount[0]}   {Fore.LIGHTBLACK_EX}⭐First discovery: {Fore.BLUE}{firstDiscoveryCount[0]}{Style.RESET_ALL}", end="\r")
+			print(f"    {Fore.LIGHTBLACK_EX}Workers: {threading.active_count()-1}   🧱Item{plural(itemCount[0])}: {Fore.BLUE}{itemCount[0]}   {Fore.LIGHTBLACK_EX}📄Recipe{plural(recipeCount[0])}: {Fore.BLUE}{recipeCount[0]}   {Fore.LIGHTBLACK_EX}⭐First discovery: {Fore.BLUE}{firstDiscoveryCount[0]}{Style.RESET_ALL}", end="\r")
 	except Exception as e:
 		clLine()
 		print(f"Worker error: {Fore.RED}{e}{Style.RESET_ALL}")
