@@ -1,6 +1,7 @@
 import mysql.connector
 import requests
 import os
+from multiprocessing.connection import Client
 from dotenv import load_dotenv
 from colorama import Fore, Style
 from function.indicator import indicator
@@ -11,6 +12,13 @@ load_dotenv()
 
 def craft(itemId1, item1, itemId2, item2):
 	try:
+		try:
+			address = ('localhost', 6872)
+			conn = Client(address)
+		except Exception as e:
+			clLine()
+			print(f"Connexion error: {Fore.RED}{e}{Style.RESET_ALL}")
+
 		database = mysql.connector.connect(host=os.getenv("MYSQL_HOST"), user=os.getenv("MYSQL_USER"), password=os.getenv("MYSQL_PASSWORD"), database=os.getenv("MYSQL_DB"), charset="utf8mb4")
 		cursor = database.cursor()
 
@@ -28,8 +36,7 @@ def craft(itemId1, item1, itemId2, item2):
 
 				# Nothing is not an item
 				if data['result'] == "Nothing":
-					clLine()
-					print(f"[{Fore.RED}x{Style.RESET_ALL}] {item1} + {item2} = {Fore.RED}Nothing found.{Style.RESET_ALL}")
+					conn.send(f"[{Fore.RED}x{Style.RESET_ALL}] {item1} + {item2} = {Fore.RED}Nothing found.{Style.RESET_ALL}")
 
 					cursor.execute(f"INSERT INTO craft (idItem1, idItem2) VALUES ({itemId1}, {itemId2})")
 					database.commit()
@@ -38,8 +45,7 @@ def craft(itemId1, item1, itemId2, item2):
 				cursor.execute(f"SELECT name FROM item WHERE name = '{data['result']}'")
 				isExist = cursor.fetchone()
 
-				clLine()
-				print(f"[{indicator(isExist, data['isNew'])}] {item1} + {item2} = {colorResult(isExist, data['isNew'], data['result'])} {data['emoji']}{Style.RESET_ALL}")
+				conn.send(f"[{indicator(isExist, data['isNew'])}] {item1} + {item2} = {colorResult(isExist, data['isNew'], data['result'])} {data['emoji']}{Style.RESET_ALL}")
 
 				if (isExist):
 					cursor.execute(f"SELECT id FROM item WHERE name = '{data['result']}'")
@@ -59,10 +65,10 @@ def craft(itemId1, item1, itemId2, item2):
 					database.commit()
 			else:
 				clLine()
-				print(f"Crafting failed: {Fore.RED}{response.status_code} {response.reason}{Style.RESET_ALL}")
+				conn.send(f"Crafting failed: {Fore.RED}{response.status_code} {response.reason}{Style.RESET_ALL}")
 		except Exception as e:
 			clLine()
-			print(f"API error: {Fore.RED}{e}{Style.RESET_ALL}")
+			conn.send(f"API error: {Fore.RED}{e}{Style.RESET_ALL}")
 	except Exception as e:
 		clLine()
-		print(f"Craft error: {Fore.RED}{e}{Style.RESET_ALL}")
+		conn.send(f"Craft error: {Fore.RED}{e}{Style.RESET_ALL}")

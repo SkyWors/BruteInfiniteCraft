@@ -1,6 +1,5 @@
 import mysql.connector
 import os
-import threading
 from dotenv import load_dotenv
 from colorama import Fore, Style
 from function.plural import plural
@@ -40,18 +39,6 @@ def worker():
 				continue
 
 			craft(tempId[0], tempName[0], tempId[1], tempName[1])
-
-			cursor.execute(f"SELECT count(*) FROM item")
-			itemCount = cursor.fetchone()
-			database.commit()
-			cursor.execute(f"SELECT count(*) FROM craft")
-			recipeCount = cursor.fetchone()
-			database.commit()
-			cursor.execute(f"SELECT count(*) FROM item WHERE isNew = 1")
-			firstDiscoveryCount = cursor.fetchone()
-			database.commit()
-
-			print(f"    {Fore.LIGHTBLACK_EX}Workers: {threading.active_count()-1}   🧱Item{plural(itemCount[0])}: {Fore.BLUE}{itemCount[0]}   {Fore.LIGHTBLACK_EX}📄Recipe{plural(recipeCount[0])}: {Fore.BLUE}{recipeCount[0]}   {Fore.LIGHTBLACK_EX}⭐First discovery: {Fore.BLUE}{firstDiscoveryCount[0]}{Style.RESET_ALL}", end="\r")
 	except Exception as e:
 		clLine()
 		print(f"Worker error: {Fore.RED}{e}{Style.RESET_ALL}")
