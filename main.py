@@ -11,11 +11,11 @@ if __name__ == "__main__":
 
 	try:
 		server_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-		server_socket.bind(("127.0.0.1", 65432))
+		server_socket.bind(("127.0.0.1", 6583))
 	except Exception as e:
 		print(f"Server error: {e}")
 
-	workerNumber = 10
+	workerNumber = 1
 
 	for i in range(workerNumber):
 		try:
@@ -25,22 +25,17 @@ if __name__ == "__main__":
 			clLine()
 			print(f"Thread error: {Fore.RED}{e}{Style.RESET_ALL}")
 
-tempLine = []
-
-while True:
-	width, height = os.get_terminal_size()
-
-	server_socket.listen()
-	conn, addr = server_socket.accept()
-	msg = conn.recv(1024)
-
-	os.system("cls || clear")
-
 	print(f"{Fore.LIGHTYELLOW_EX}{Figlet(font='small').renderText('BruteInfiniteCraft')}{Style.RESET_ALL}")
-	statistic()
-	print("\n\n")
 
-	tempLine.append(msg.decode(encoding="utf-8"))
+	while True:
+		width, height = os.get_terminal_size()
 
-	print("\n".join(tempLine[-(height-10):]))
+		server_socket.listen()
+		conn, addr = server_socket.accept()
+		msg = conn.recv(1024)
+
+		clLine()
+		print(msg.decode(encoding="utf-8"))
+
+		statistic()
 

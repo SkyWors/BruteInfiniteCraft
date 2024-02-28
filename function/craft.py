@@ -14,7 +14,7 @@ def craft(itemId1, item1, itemId2, item2):
 	try:
 		try:
 			client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-			client_socket.connect(("127.0.0.1", 65432))
+			client_socket.connect(("127.0.0.1", 6583))
 		except Exception as e:
 			clLine()
 			print(f"Connexion error: {Fore.RED}{e}{Style.RESET_ALL}")
@@ -27,7 +27,9 @@ def craft(itemId1, item1, itemId2, item2):
 				f"https://neal.fun/api/infinite-craft/pair?first={item1}&second={item2}",
 				headers={
 					"Referer": "https://neal.fun/infinite-craft/",
-					"User-Agent": "Mozilla/5.0 (Linux i546 x86_64; en-US) AppleWebKit/537.10 (KHTML, like Gecko) Chrome/47.0.1707.389 Safari/603"
+					"User-Agent": "Mozilla/5.0 (Linux i546 x86_64; en-US) AppleWebKit/537.10 (KHTML, like Gecko) Chrome/47.0.1707.389 Safari/603",
+					'accept-language': 'en-US,en;q=0.9',
+			        'sec-ch-ua': '"Not(A:Brand";v="24", "Chromium";v="122"'
 				},
 			)
 
