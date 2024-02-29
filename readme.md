@@ -18,6 +18,10 @@ Run ``python3 main.py`` in any terminal from root directory to start the program
 
 Change workerNumber variable to choose how many worker you want to dig the API.
 
+## 😮 Show datas
+
+You can use [InfiniteCraftWiki](https://github.com/SkyWors/InfiniteCraftWiki) project to display your datas on a local website !
+
 ## ❓ Explications
 
 In terminal result:
